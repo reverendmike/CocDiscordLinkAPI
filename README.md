@@ -3,16 +3,16 @@
 ## About
 CocDiscordLinkAPI is a service created for Clash of Clans Discord bot developers. The purpose is to be a central repository for links between Clash of Clans player accounts and their Discord account. 
 
-The is a REST-based service, hosted in Microsoft Azure. It requires a username/password to use. To request a login, join my support server and send a message in #coc-discord-link-api. Click here to join: https://discord.gg/kPqEmxR
+This is a REST-based service, hosted in Microsoft Azure. It requires a username/password to use. To request a login, join my support server and send a message in #coc-discord-link-api. Click here to join: https://discord.gg/kPqEmxR
 
 ## Using the Service
-The base URL for the server is: https://cocdiscordlink.azurewebsites.net/api/. Authentication is done using JWT, which expire every 2 hours after being issued.
+The base URL for the service is: https://cocdiscordlink.azurewebsites.net/api/. Authentication is done using JWT, which expire every 2 hours after being issued.
 
 ### Authentication
 POST - https://cocdiscordlink.azurewebsites.net/api/login
 
 Payload Example:
-```
+```json
 {
     "username": "accountname", 
     "password": "accountpassword"
@@ -20,12 +20,22 @@ Payload Example:
 ```
 
 If successful, you will receive a 200 OK message, with your token
-```
+```json
 {
     "token": "23jl2k3jh23jKLKk3lh2Kl.A5D46d2312eFealkjkl3Jkl.x923laslkjlKLJlk32lkJlk12jKl3lkjKLJKl1355a"
 }
 ```
 If not successful, you will receive a 401 Unauthorized message.
+
+**Retrieving the token expiration time**
+
+Expiration time is stored in UTC, and is specified as a claim on the token. Below is an example in C# using Jwt.NET of how to obtain the expiration:
+
+```csharp
+var jwt = new JwtBuilder().WithAlgorithm(new HMACSHA256Algorithm())
+    .Decode<Dictionary<string, object>>(result.Token);
+var tokenExpireTime = DateTimeOffset.FromUnixTimeSeconds(Convert.ToUInt32(jwt["exp"]));
+```
 
 ### Retrieving a Link by Player Tag
 GET - https://cocdiscordlink.azurewebsites.net/api/links/{tag}
@@ -38,7 +48,7 @@ https://cocdiscordlink.azurewebsites.net/api/links/RQ33GCCG (no #)
 https://cocdiscordlink.azurewebsites.net/api/links/%23RQ33GCCG (# is encoded)
 ```
 Returns:
-```
+```json
 [
     {
         "playerTag": "#RQ33GCCG",
@@ -55,7 +65,7 @@ Example(s):
 https://cocdiscordlink.azurewebsites.net/api/links/658256846652301451
 ```
 Returns:
-```
+```json
 [
     {
         "playerTag": "#RQ33GCCG",
@@ -71,7 +81,7 @@ POST - https://cocdiscordlink.azurewebsites.net/api/links/batch
 
 Payload Example (JSON string array):
 
-```
+```json
 [
     "658256846652301451",
     "Q802PFCGG"
@@ -79,7 +89,7 @@ Payload Example (JSON string array):
 ```
 
 Results Example:
-```
+```json
 [
     {
         "playerTag": "#RQ33GCCG",
@@ -99,7 +109,7 @@ No records: 404 Not Found
 POST - https://cocdiscordlink.azurewebsites.net/api/links
 
 Payload Example: 
-```
+```json
 {
     "playerTag": "#RQ33GCCG",
     "discordId": "658256846652301451"
