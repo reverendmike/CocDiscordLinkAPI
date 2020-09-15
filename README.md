@@ -31,8 +31,9 @@ If not successful, you will receive a 401 Unauthorized message.
 Tokens are only valid for 2 hours from the time they are issued. Expiration time is stored in UTC as a claim on the token. Below is an example in C# using Jwt.NET of how to obtain the expiration:
 
 ```csharp
+var token = "23jl2k3jh23jKLKk3lh2Kl.A5D46d2312eFealkjkl3Jkl.x923laslkjlKLJlk32lkJlk12jKl3lkjKLJKl1355a";
 var jwt = new JwtBuilder().WithAlgorithm(new HMACSHA256Algorithm())
-    .Decode<Dictionary<string, object>>(result.Token);
+    .Decode<Dictionary<string, object>>(token);
 var tokenExpireTime = DateTimeOffset.FromUnixTimeSeconds(Convert.ToUInt32(jwt["exp"]));
 ```
 
