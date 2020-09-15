@@ -3,7 +3,7 @@
 ## About
 CocDiscordLinkAPI is a service created for Clash of Clans Discord bot developers. The purpose is to be a central repository for links between Clash of Clans player accounts and their Discord account. 
 
-This is a REST-based service, hosted in Microsoft Azure. It requires a username/password to use. To request a login, join my support server and send a message in #coc-discord-link-api. Click here to join: https://discord.gg/kPqEmxR
+This is a REST-based service, hosted in Microsoft Azure. It requires a username/password to use. To request a login, join my support server and send a message in #coc-discord-link-api. Click here to join: https://discord.gg/ZT3AqAN
 
 ## Using the Service
 
