@@ -6,7 +6,6 @@ CocDiscordLinkAPI is a service created for Clash of Clans Discord bot developers
 This is a REST-based service, hosted in Microsoft Azure. It requires a username/password to use. To request a login, join my support server and send a message in #coc-discord-link-api. Click here to join: https://discord.gg/kPqEmxR
 
 ## Using the Service
-The base URL for the service is: https://cocdiscordlink.azurewebsites.net/api/. Authentication is done using JWT, which expire every 2 hours after being issued.
 
 ### Authentication
 POST - https://cocdiscordlink.azurewebsites.net/api/login
@@ -29,7 +28,7 @@ If not successful, you will receive a 401 Unauthorized message.
 
 **Retrieving the token expiration time**
 
-Expiration time is stored in UTC, and is specified as a claim on the token. Below is an example in C# using Jwt.NET of how to obtain the expiration:
+Tokens are only valid for 2 hours from the time they are issued. Expiration time is stored in UTC as a claim on the token. Below is an example in C# using Jwt.NET of how to obtain the expiration:
 
 ```csharp
 var jwt = new JwtBuilder().WithAlgorithm(new HMACSHA256Algorithm())
