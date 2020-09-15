@@ -10,7 +10,8 @@ The base URL for the server is: https://cocdiscordlink.azurewebsites.net/api/. A
 
 ### Authentication
 POST - https://cocdiscordlink.azurewebsites.net/api/login
-Payload:
+
+Payload Example:
 ```
 {
     "username": "accountname", 
@@ -21,9 +22,10 @@ Payload:
 If successful, you will receive a 200 OK message, with your token
 ```
 {
-    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InJldmVyZW5kbWlrZSIsImV4cCI6MTYwMDEyNzAxMn0.Dx28nHQv7VLuXukrCSMhWcbKVdRY2zbRZoyah2FldEY"
+    "token": "23jl2k3jh23jKLKk3lh2Kl.A5D46d2312eFealkjkl3Jkl.x923laslkjlKLJlk32lkJlk12jKl3lkjKLJKl1355a"
 }
 ```
+If not successful, you will receive a 401 Unauthorized message.
 
 ### Retrieving a Link by Player Tag
 GET - https://cocdiscordlink.azurewebsites.net/api/links/{tag}
@@ -44,4 +46,82 @@ Returns:
     }
 ]
 ```
+
+### Retrieving a Link by DiscordId
+GET - https://cocdiscordlink.azurewebsites.net/api/links/{id}
+
+Example(s):
+```
+https://cocdiscordlink.azurewebsites.net/api/links/658256846652301451
+```
+Returns:
+```
+[
+    {
+        "playerTag": "#RQ33GCCG",
+        "discordId": "658256846652301451"
+    }
+]
+```
+
+### Retrieving Multiples in Batch
+POST - https://cocdiscordlink.azurewebsites.net/api/links/batch
+
+*Note: This payload can take both DiscordIds and Player Tags both, and they can be mix-and-matched, as in the example below:*
+
+Payload Example (JSON string array):
+
+```
+[
+    "658256846652301451",
+    "Q802PFCGG"
+]
+```
+
+Results Example:
+```
+[
+    {
+        "playerTag": "#RQ33GCCG",
+        "discordId": "658256846652301451"
+    },
+    {
+        "playerTag": "#Q802PFCGG",
+        "discordId": "655321455562025874"
+    }    
+]
+```
+**Return Values**
+Success: 200 OK 
+No records: 404 Not Found
+
+### Adding a New Link
+POST - https://cocdiscordlink.azurewebsites.net/api/links
+
+Payload Example: 
+```
+{
+    "playerTag": "#RQ33GCCG",
+    "discordId": "658256846652301451"
+}
+```
+
+**Return Values:**
+Successful result: 200 OK
+Player already exists: 409 Conflict
+
+### Deleting an Existing Link
+DELETE - https://cocdiscordlink.azurewebsites.net/api/links/{tag}
+
+*Note: This only works on Clash of Clans Player Tags*
+
+Example(s):
+```
+https://cocdiscordlink.azurewebsites.net/api/links/RQ33GCCG (no #)
+https://cocdiscordlink.azurewebsites.net/api/links/%23RQ33GCCG (# is encoded)
+```
+
+**Return Values:**
+Successful result: 200 OK
+Player already exists: 409 Conflict
 
