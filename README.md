@@ -132,6 +132,6 @@ https://cocdiscordlink.azurewebsites.net/api/links/%23RQ33GCCG (# is encoded)
 ```
 
 **Return Values:**
-Successful result: 200 OK
-Player already exists: 409 Conflict
+Success: 200 OK
+Player does not exist: 404 Not Found
 
